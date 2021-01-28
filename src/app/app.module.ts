@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button'; 
 import { MatIconModule } from '@angular/material/icon'
+import { DishService } from './services/dish.service';
 
 import 'hammerjs';
 import { MenuComponent } from './menu/menu.component';
@@ -34,7 +35,7 @@ import { DishdetailComponent } from './dishdetail/dishdetail.component';
     MatButtonModule,
     MatIconModule
   ],
-  providers: [],//specify the services that this module will make use of
+  providers: [DishService],//specify the services that this module will make use of
   bootstrap: [AppComponent]// AppComponent is the root component of our app
 })
 export class AppModule { }
