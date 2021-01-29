@@ -16,12 +16,18 @@ import { DishService } from './services/dish.service';
 import 'hammerjs';
 import { MenuComponent } from './menu/menu.component';
 import { DishdetailComponent } from './dishdetail/dishdetail.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; 
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
+    FooterComponent,
     MenuComponent,
-    DishdetailComponent
+    DishdetailComponent,
+    
   ],
   imports: [ //importe modules that this app is dependent on
     BrowserModule,
@@ -33,7 +39,8 @@ import { DishdetailComponent } from './dishdetail/dishdetail.component';
     MatGridListModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    FontAwesomeModule
   ],
   providers: [DishService],//specify the services that this module will make use of
   bootstrap: [AppComponent]// AppComponent is the root component of our app

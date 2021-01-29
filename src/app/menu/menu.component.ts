@@ -22,3 +22,4 @@ export class MenuComponent implements OnInit {
     this.selectedDish = dish;
   }
 }
+                                                                                                             
