@@ -23,7 +23,8 @@ import { ContactComponent } from './contact/contact.component';
 import { PromotionService } from './services/promotion.service';
 import { DishService } from './services/dish.service';
 import {AppRoutingModule} from './app-routing/app-routing.module';
-
+import { LeaderService } from './services/leader.service';
+import { LeaderComponent } from './leader/leader.component';
 
 @NgModule({
   declarations: [
@@ -34,8 +35,8 @@ import {AppRoutingModule} from './app-routing/app-routing.module';
     DishdetailComponent,
     HomeComponent,
     AboutComponent,
-    ContactComponent
-
+    ContactComponent,
+    LeaderComponent
   ],
   imports: [ //importe modules that this app is dependent on
     BrowserModule,
@@ -50,7 +51,7 @@ import {AppRoutingModule} from './app-routing/app-routing.module';
     MatIconModule,
     FontAwesomeModule
   ],
-  providers: [DishService , PromotionService],//specify the services that this module will make use of
+  providers: [DishService , PromotionService, LeaderService],//specify the services that this module will make use of
   bootstrap: [AppComponent]// AppComponent is the root component of our app
 })
 export class AppModule { }

@@ -1,0 +1,23 @@
+<mat-card fxFlex fxLayoutGap="10">
+    <!-- <div fxLayout="column" > -->
+     <div *ngFor="let leader of leaders">
+    
+        <mat-card-header fxLayout="row" >
+            <div mat-card-avatar fxFlex="7"><img src={{leader.image}} alt="Avatar" class="avatar"/></div>
+            <!-- <mat-card-title >
+             
+            </mat-card-title> -->
+        </mat-card-header>
+        <mat-card-content fxFlex>
+           <h3> {{leader.name}}</h3>
+           <p> {{leader.designation}}</p>
+           <p>
+            <!-- <p ng-repeat="..."> -->
+                {{leader.description | slice : 0  : 100 }} ...
+            </p>
+        </mat-card-content>
+        <hr>
+        <!-- <mat-divider></mat-divider> -->
+    </div>
+         
+ </mat-card>
