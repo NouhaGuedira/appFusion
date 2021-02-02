@@ -25,6 +25,8 @@ import { DishService } from './services/dish.service';
 import {AppRoutingModule} from './app-routing/app-routing.module';
 import { LeaderService } from './services/leader.service';
 import { LeaderComponent } from './leader/leader.component';
+import { LoginComponent } from './login/login.component';
+import {MatDialogModule } from '@angular/material/dialog';//for dialog
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { LeaderComponent } from './leader/leader.component';
     HomeComponent,
     AboutComponent,
     ContactComponent,
-    LeaderComponent
+    LeaderComponent,
+    LoginComponent
+
   ],
   imports: [ //importe modules that this app is dependent on
     BrowserModule,
@@ -49,7 +53,11 @@ import { LeaderComponent } from './leader/leader.component';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatDialogModule
+  ],
+  entryComponents:[ //makae this components be opened from another component
+    LoginComponent
   ],
   providers: [DishService , PromotionService, LeaderService],//specify the services that this module will make use of
   bootstrap: [AppComponent]// AppComponent is the root component of our app

@@ -15,5 +15,7 @@ export const routes : Routes =[
     {path: 'contact' , component: ContactComponent },
     {path: 'leaders' , component: LeaderComponent },
     {path: 'aboutus' , redirectTo: '/about' },
-    {path: '' , redirectTo: '/home' ,pathMatch :'full' }
+    {path: '' , redirectTo: '/home' ,pathMatch :'full' },
+  //  {path :'**', component: PageNotFoundComponent},
+
 ];
