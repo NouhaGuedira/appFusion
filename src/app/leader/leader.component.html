@@ -1,4 +1,4 @@
-<mat-card fxFlex fxLayoutGap="10">
+<mat-card fxFlex fxLayoutGap="10" *ngIf="leaders">
     <!-- <div fxLayout="column" > -->
      <div *ngFor="let leader of leaders">
     
@@ -9,15 +9,26 @@
             </mat-card-title> -->
         </mat-card-header>
         <mat-card-content fxFlex>
-           <h3> {{leader.name}}</h3>
-           <p> {{leader.designation}}</p>
-           <p>
+            <div mat-line><h3> {{leader.name}}</h3></div>
+            <div mat-line>{{leader.designation}}</div>
+            <div mat-line>{{leader.description | slice : 0  : 100 }} ...
             <!-- <p ng-repeat="..."> -->
-                {{leader.description | slice : 0  : 100 }} ...
-            </p>
+                <!-- {{leader.description | slice : 0  : 100 }} ... -->
+            </div>
         </mat-card-content>
         <hr>
         <!-- <mat-divider></mat-divider> -->
     </div>
-         
+    
+    <!-- <mat-list>
+        <h2>Comments</h2>
+        <mat-list-item *ngFor="let comment of dish.comments" >
+          <div mat-line>{{comment.comment}}</div>
+          <div mat-line>{{comment.rating}} Stars</div>
+          <div mat-line>-- {{comment.author}} {{comment.date | date}}</div>
+        </mat-list-item>
+      </mat-list> -->
  </mat-card>
+ <div [hidden] ="leaders">
+    <mat-spinner></mat-spinner><h4>Loading...Please Wait !</h4>
+</div>

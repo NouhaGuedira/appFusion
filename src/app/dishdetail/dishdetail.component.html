@@ -10,10 +10,10 @@
 
     <!-- display the selected item -->
     <div fxFlex="30">
-        <mat-card class="dish-card">
+        <mat-card class="dish-card" *ngIf="dish">
             <mat-card-header>
-              <div mat-card-avatar class="dish-header-image"></div>
-              <mat-card-title>{{dish.name | uppercase}}</mat-card-title>
+              <div mat- card-avatar class="dish-header-image"></div>
+              <mat-card-title >{{dish.name | uppercase}}</mat-card-title>
               <!-- <mat-card-subtitle>{{dish.name | uppercase}}</mat-card-subtitle> -->
             </mat-card-header>
             <img mat-card-image weight="100" height="300px" src={{dish.image}} alt={{dish.image}}>
@@ -30,8 +30,8 @@
           </mat-card>
     </div>
       <!-- comments here -->
-    <div fxFlex>
-      <mat-list>
+    <div fxFlex="40">
+      <mat-list *ngIf="dish">
         <h2>Comments</h2>
         <mat-list-item *ngFor="let comment of dish.comments" >
           <div mat-line>{{comment.comment}}</div>

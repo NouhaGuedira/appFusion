@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder, FormGroup , Validators } from '@angular/forms';
 import {Feadback , ContactType} from '../shared/feadback';
 
@@ -8,6 +8,7 @@ import {Feadback , ContactType} from '../shared/feadback';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
+@ViewChild('fform') feedbackFormDirective: any;
 
  // feedbackForm : FormGroup ;
   feedbackForm = new FormGroup ({});
@@ -51,5 +52,7 @@ export class ContactComponent implements OnInit {
       message: ''
     });
     console.log("after reset",this.feedbackForm);
+    this.feedbackFormDirective.resetForm(); //reset all form values - validators also
+    console.log("after resetForm",this.feedbackFormDirective);
   }
 }

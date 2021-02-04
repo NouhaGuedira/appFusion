@@ -81,7 +81,9 @@
         </table>
       <p>
         <mat-form-field class="full-width">
-          <textarea matInput formControlName="message" placeholder="Your Feedback" rows=12></textarea>
+          <textarea matInput formControlName="message" placeholder="Your Feedback" rows=12 required></textarea>
+          <mat-error *ngIf="feedbackForm.get('message')!.hasError('required') && feedbackForm.get('message')!.touched">message is required</mat-error>
+        
         </mat-form-field>
       </p>
       <button type="submit" [disabled]="!feedbackForm.valid" mat-button class="background-primary text-floral-white">Submit</button>
