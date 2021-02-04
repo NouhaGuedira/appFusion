@@ -9,14 +9,14 @@ import {Feadback , ContactType} from '../shared/feadback';
 })
 export class ContactComponent implements OnInit {
 
-  feedbackForm : FormGroup ;
-
+ // feedbackForm : FormGroup ;
+  feedbackForm = new FormGroup ({});
   feedback : Feadback | undefined;
   contactType = ContactType;
   testing :string | undefined;
 
   constructor(private fb : FormBuilder) { 
-    this.feedbackForm =  this.fb.group({});
+    //this.feedbackForm =  this.fb.group({});
     this.createForm();
     this.testing = "je teste ";
   }
@@ -27,10 +27,10 @@ export class ContactComponent implements OnInit {
   createForm(){
     this.feedbackForm =this.fb.group({ //our data structure 
       
-      firstname: '',
-      lastname: '',
-      telnum: 0,
-      email: '',
+      firstname: ['',Validators.required],
+      lastname: ['',Validators.required],
+      telnum: ['' ,Validators.required],
+      email: ['',Validators.required],
       agree: false,
       contacttype: 'None',
       message: ''
@@ -39,8 +39,17 @@ export class ContactComponent implements OnInit {
   }
   onSubmit(){
     this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
-    this.feedbackForm.reset();
-
+    console.log("on submit",this.feedback);
+    //for reactive forms validation
+    this.feedbackForm.reset({
+      firstname: '',
+      lastname: '',
+      telnum: '',
+      email: '',
+      agree: false,
+      contacttype: 'None',
+      message: ''
+    });
+    console.log("after reset",this.feedbackForm);
   }
 }
