@@ -28,7 +28,12 @@
               <button mat-button>SHARE</button>
             </mat-card-actions>
           </mat-card>
+
+          <div [hidden]="dish"> <!-- if true hide this element-->
+            <mat-spinner></mat-spinner><h4>Loading... Please Wait</h4>
+          </div>
     </div>
+    
       <!-- comments here -->
     <div fxFlex="40">
       <mat-list *ngIf="dish">
@@ -39,7 +44,9 @@
           <div mat-line>-- {{comment.author}} {{comment.date | date}}</div>
         </mat-list-item>
       </mat-list>
-    
+    <div [hidden]="dish"> <!-- if true hide this element-->
+      <mat-spinner></mat-spinner><h4>Loading... Please Wait</h4>
+    </div>
     
     </div>
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Dish} from '../shared/dish';
 import { DishService} from '../services/dish.service';
+import { Observable } from 'rxjs';
 
     @Component({
       selector: 'app-menu',
@@ -16,8 +17,8 @@ export class MenuComponent implements OnInit {
   constructor( private dishService: DishService) {}
 
   ngOnInit(){
-    this.dishService.getDishes() //a promise if resolved then..
-    .then((dishes) => this.dishes = dishes);
+    this.dishService.getDishes() //subscribe to the observable returned
+    .subscribe(dishes =>this.dishes = dishes);//then((dishes) => this.dishes = dishes);
   }
   onSelect(dish : Dish){
     this.selectedDish = dish;
