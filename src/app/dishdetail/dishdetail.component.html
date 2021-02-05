@@ -6,10 +6,11 @@
     fxLayout.xs="column"
     fxLayoutGap="10px"
     fxLayoutAlign="space-around center"
-    *ngIf="dish">
+    >
 
     <!-- display the selected item -->
     <div fxFlex="30">
+        
         <mat-card class="dish-card" *ngIf="dish">
             <mat-card-header>
               <div mat- card-avatar class="dish-header-image"></div>
@@ -23,12 +24,14 @@
               </p>
             </mat-card-content>
             <mat-card-actions>
+              <button mat-button [routerLink] = "['/dishdetail',prev]"><span class="fa fa-chevron-left fa-lg"></span></button>
               <button mat-button (click)='goBack()'>BACK</button>
               <button mat-button >LIKE </button>
               <button mat-button>SHARE</button>
+              <button mat-button [routerLink] = "['/dishdetail',next]"><span class="fa fa-chevron-right fa-lg"></span></button>
             </mat-card-actions>
           </mat-card>
-
+          
           <div [hidden]="dish"> <!-- if true hide this element-->
             <mat-spinner></mat-spinner><h4>Loading... Please Wait</h4>
           </div>

@@ -11,6 +11,11 @@ export class DishService {
 
   constructor() { }
 
+  //get all IDS and return it in an array
+  getDishIds(): Observable<string[] | any>{
+    return of(DISHES.map(dish=> dish.id ));
+  }
+ 
   getDishes(): Observable<Dish[]>{
     return of(DISHES).pipe(delay(2000));//.toPromise();
     // return new Promise(resolve =>{
