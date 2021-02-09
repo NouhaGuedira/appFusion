@@ -41,4 +41,15 @@ export class DishService {
     // });
     //return Promise.resolve(DISHES.filter((dish) => (dish.featured))[0]);
   }
+  setCommentTodish(com : Comment , id : string ) :void{
+    //get the current dish
+    console.log("we are in setCommentTodish()");
+    
+    // this.getDishById(id)
+    //     .subscribe(dish => dish.comments?.push(com));
+        
+    //add comment to its list of comments
+   // return of(Dish.comment.push(messg));
+          
+  }
 }

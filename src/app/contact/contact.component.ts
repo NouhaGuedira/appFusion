@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder, FormGroup , Validators } from '@angular/forms';
+import { DishdetailComponent } from '../dishdetail/dishdetail.component';
 import {Feadback , ContactType} from '../shared/feadback';
 
 @Component({
@@ -8,7 +9,7 @@ import {Feadback , ContactType} from '../shared/feadback';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
-@ViewChild('fform') feedbackFormDirective: any;
+@ViewChild('fform') feedbackFormDirective: any;//HTMLElement | undefined;
 
  // feedbackForm : FormGroup ;
   feedbackForm = new FormGroup ({});
