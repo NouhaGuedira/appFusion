@@ -46,3 +46,11 @@ body{
 .flex-spacer {
   flex: 1 1 auto;
 }
+
+.highlight {
+  background-color : $background-pale;
+  border: 1px solid $primary-color-dark;
+  z-index : 1 ; //the item will be raised up 1
+  transform: scale(1.02); //zoom the selected item a bit
+
+}
