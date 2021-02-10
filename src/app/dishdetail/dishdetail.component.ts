@@ -7,6 +7,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
 import { baseURL } from '../shared/baseurl';
+import { error } from 'protractor';
 
 // Js Object
 
@@ -27,7 +28,7 @@ export class DishdetailComponent implements OnInit {
  commentForm = new FormGroup({});//passed from the template
  theComment : Comment | undefined ;//used in onSubmit form
  errorMsg : string | undefined ; 
-
+ dishcopy : Dish |undefined;
 
   constructor(private dishService : DishService ,
               private location : Location ,
@@ -61,14 +62,17 @@ export class DishdetailComponent implements OnInit {
   ngOnInit(): void {
    // let id = this.route.snapshot.params['id'];//params is an observable obtains params from the url whenever it changes (a snapshot = in a moment of time)
     this.dishService.getDishIds().subscribe(dishIdsArr => this.dishIds = dishIdsArr ,
-                                            catchError(errormsg => this.errorMsg = errormsg) );
+                                            errormsg => this.errorMsg = <any>errormsg
+                                            );
     //pipe in the params observable values and use each one of them in our service methode then subsrcibe the output value
-    this.route.params.pipe(switchMap((params: Params)=> this.dishService.getDishById(params['id'])))
-                          .subscribe(currentdish =>{this.dish= currentdish;
-                                      this.currentId = currentdish.id;
-                                      this.setNextPrev(currentdish.id!); 
-                                    } , 
-                                    catchError(error => this.errorMsg = error));
+    this.route.params
+        .pipe(switchMap((params: Params)=> this.dishService.getDishById(params['id'])))
+        .subscribe(currentdish =>{this.dish= currentdish;
+                                  this.dishcopy = currentdish;
+                                  this.currentId = currentdish.id;
+                                  this.setNextPrev(currentdish.id!); 
+                                 },
+                                  error => this.errorMsg = <any>error );
     
     //this.dishService.getDishById(id).subscribe((dish)=>this.dish = dish);//.then((dish)=>this.dish = dish);
 
@@ -126,15 +130,25 @@ export class DishdetailComponent implements OnInit {
   submitComment(){
     //init date 
     const date = new Date();
-    this.commentForm.value.date = date.toDateString();//Month 2, year
+    this.commentForm.value.date = date.toDateString();//insert current date of submition
     this.theComment = this.commentForm.value;//map values submited to my object model
-    //insert to comments array in the current dish
-    //this.dishService.setCommentTodish(this.theComment! , this.currentId!);
-    this.dish!.comments!.push(this.theComment!);
-    //console.log("form comment =", );
-    //reset the form
+    
+    this.dishcopy!.comments!.push(this.theComment!);
+    
+    //push the comment in server data
+    this.dishService.putDish(this.dishcopy!)
+          .subscribe(updateddish =>{
+            this.dish = updateddish; 
+            this.dishcopy = updateddish ;
+          },
+          errormess => {this.dish = undefined;
+                        this.dishcopy = undefined;
+                        this.errorMsg =<any>errormess;}
+                                        
+    );
+    
+    //reset the form comment
     this.commentForm.reset({
-
       rating : 5,
       comment : '',
       author: '',

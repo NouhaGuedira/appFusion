@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Dish} from '../shared/dish';
 //import {DISHES} from '../shared/dishes'; 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseURL } from '../shared/baseurl';
 import { Observable , of, zip } from 'rxjs';
 import { delay, map , catchError } from 'rxjs/operators';
@@ -62,5 +62,14 @@ export class DishService {
     //add comment to its list of comments
    // return of(Dish.comment.push(messg));
           
+  }
+  putDish(dish : Dish): Observable<Dish>{
+    const httpOptions = { //put() have optional params : headers
+      headers : new HttpHeaders({
+        'Content-type': 'application/json'
+      })
+    };
+    return this.http.put<Dish>(baseURL +'dishes/' + dish.id, dish, httpOptions)
+          .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 }
