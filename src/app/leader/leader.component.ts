@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { LEADERS } from '../shared/leaders';
 import { Leader }  from '../shared/leader';
 import { LeaderService } from '../services/leader.service';
@@ -11,7 +11,8 @@ import { LeaderService } from '../services/leader.service';
 export class LeaderComponent implements OnInit {
 
   leaders : Leader[] | undefined;
-  constructor (private LeaderService : LeaderService,) { }
+  constructor (@Inject('BaseURL') public BaseURL : any,
+               private LeaderService : LeaderService,) { }
 
   ngOnInit(): void {
     this.LeaderService.getLeaders()

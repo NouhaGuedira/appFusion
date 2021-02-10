@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, ViewChild } from '@angular/core';
+import { Component, OnInit,Input, ViewChild, Inject } from '@angular/core';
 import {Dish} from '../shared/dish';
 import  { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -6,6 +6,8 @@ import { DishService } from '../services/dish.service';
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
+import { baseURL } from '../shared/baseurl';
+
 // Js Object
 
 
@@ -29,7 +31,8 @@ export class DishdetailComponent implements OnInit {
   constructor(private dishService : DishService ,
               private location : Location ,
               private route : ActivatedRoute,
-              private formBuilder : FormBuilder) { 
+              private formBuilder : FormBuilder,
+              @Inject('BaseURL') public BaseURL : any) { 
 
     //initialize the reactive form
     this.initcommentForm();
@@ -113,7 +116,7 @@ export class DishdetailComponent implements OnInit {
           }
         }
       }
-    }
+    } 
     //if there is not form submited do nothing
     return;
   }

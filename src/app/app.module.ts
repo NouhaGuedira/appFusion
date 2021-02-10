@@ -39,7 +39,9 @@ import { LoginComponent } from './login/login.component';
 import {AppRoutingModule} from './app-routing/app-routing.module';
 import { LeaderService } from './services/leader.service';
 import { LeaderComponent } from './leader/leader.component';
+import { HttpClientModule } from '@angular/common/http';
 
+import {baseURL} from './shared/baseurl';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import { LeaderComponent } from './leader/leader.component';
   imports: [ //importe modules that this app is dependent on
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     FlexLayoutModule,
     FormsModule,
     AppRoutingModule,
@@ -82,7 +85,9 @@ import { LeaderComponent } from './leader/leader.component';
   entryComponents:[ //makae this components be opened from another component
     LoginComponent
   ],
-  providers: [DishService , PromotionService, LeaderService],//specify the services that this module will make use of
+  providers: [DishService , PromotionService, LeaderService,
+              {provide : 'BaseURL' , useValue : baseURL}
+             ],//specify the services that this module will make use of
   bootstrap: [AppComponent]// AppComponent is the root component of our app
 })
 export class AppModule { }
