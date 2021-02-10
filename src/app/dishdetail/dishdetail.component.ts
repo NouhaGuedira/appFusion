@@ -3,7 +3,7 @@ import {Dish} from '../shared/dish';
 import  { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { DishService } from '../services/dish.service';
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
 import { baseURL } from '../shared/baseurl';
@@ -18,15 +18,16 @@ import { baseURL } from '../shared/baseurl';
 })
 export class DishdetailComponent implements OnInit {
 @ViewChild('fform') commentFormDirective : any; //to access the html elements of the form 
-// @Input()
+
  dish: Dish | undefined;
  dishIds : string[] | undefined;
  currentId : string | undefined ;
  prev: string | undefined;
  next: string | undefined ;
  commentForm = new FormGroup({});//passed from the template
- //commentForm : FormGroup | undefined;
  theComment : Comment | undefined ;//used in onSubmit form
+ errorMsg : string | undefined ; 
+
 
   constructor(private dishService : DishService ,
               private location : Location ,
@@ -59,13 +60,15 @@ export class DishdetailComponent implements OnInit {
 
   ngOnInit(): void {
    // let id = this.route.snapshot.params['id'];//params is an observable obtains params from the url whenever it changes (a snapshot = in a moment of time)
-    this.dishService.getDishIds().subscribe(dishIdsArr => this.dishIds = dishIdsArr );
+    this.dishService.getDishIds().subscribe(dishIdsArr => this.dishIds = dishIdsArr ,
+                                            catchError(errormsg => this.errorMsg = errormsg) );
     //pipe in the params observable values and use each one of them in our service methode then subsrcibe the output value
     this.route.params.pipe(switchMap((params: Params)=> this.dishService.getDishById(params['id'])))
                           .subscribe(currentdish =>{this.dish= currentdish;
                                       this.currentId = currentdish.id;
                                       this.setNextPrev(currentdish.id!); 
-                                    } )//! means the value can be trusted its not null ! 
+                                    } , 
+                                    catchError(error => this.errorMsg = error));
     
     //this.dishService.getDishById(id).subscribe((dish)=>this.dish = dish);//.then((dish)=>this.dish = dish);
 

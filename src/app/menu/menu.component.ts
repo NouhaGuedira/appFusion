@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {Dish} from '../shared/dish';
-import { DishService} from '../services/dish.service';
+import { DishService } from '../services/dish.service';
 import { Observable } from 'rxjs';
 
     @Component({
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class MenuComponent implements OnInit {
 
   dishes: Dish[] | undefined ;//typeScrypt will affect the type implicitely
-
+  errorMsg : string | undefined; 
   //selectedDish : Dish | undefined;
 
   constructor(@Inject('BaseURL') public BaseURL :any,
@@ -19,8 +19,9 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(){
     this.dishService.getDishes() //subscribe to the observable returned
-    .subscribe(dishes =>this.dishes = dishes);//then((dishes) => this.dishes = dishes);
-  }
+    .subscribe(dishes =>this.dishes = dishes, 
+                errormsg => this.errorMsg = <any>errormsg);//then((dishes) => this.dishes = dishes);
+  }  
    onSelect(dish : Dish){
   //   this.selectedDish = dish;
   }

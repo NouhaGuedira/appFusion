@@ -4,24 +4,28 @@ import {Dish} from '../shared/dish';
 import { HttpClient } from '@angular/common/http';
 import { baseURL } from '../shared/baseurl';
 import { Observable , of, zip } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { delay, map , catchError } from 'rxjs/operators';
+
+import {ProcessHTTPMsgService } from './process-httpmsg.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DishService {
 
-  constructor(private http: HttpClient ) { }
+  constructor(private http: HttpClient ,
+              private processHTTPMsgService : ProcessHTTPMsgService) { }
 
   getDishes(): Observable<Dish[]>{
-    return this.http.get<Dish[]>(baseURL + 'dishes');
+    return this.http.get<Dish[]>(baseURL + 'dishes')
+          .pipe(catchError(this.processHTTPMsgService.handleError));
     
     //of(DISHES).pipe(delay(2000));
   }
 
   getDishById(id: string) : Observable<Dish>{
    
-    return this.http.get<Dish>(baseURL + 'dishes/' + id) ;
+    return this.http.get<Dish>(baseURL + 'dishes/' + id).pipe(catchError(this.processHTTPMsgService.handleError)) ;
     //return of(DISHES.filter((dish) => (dish.id === id) )[0]).pipe(delay(2000));
     
     // return new Promise(resolve=> {
@@ -33,7 +37,8 @@ export class DishService {
  
   getDishIds(): Observable<string[] | any>{
     //map dishes and then map ids
-    return this.getDishes().pipe(map(dishes => dishes.map(dish => dish.id)));
+    return this.getDishes().pipe(map(dishes => dishes.map(dish => dish.id)))
+                                .pipe(catchError(error => error));
    //return of(DISHES.map(dish=> dish.id ));
   }
  

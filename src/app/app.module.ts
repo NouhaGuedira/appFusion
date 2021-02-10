@@ -42,6 +42,7 @@ import { LeaderComponent } from './leader/leader.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import {baseURL} from './shared/baseurl';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,7 @@ import {baseURL} from './shared/baseurl';
   entryComponents:[ //makae this components be opened from another component
     LoginComponent
   ],
-  providers: [DishService , PromotionService, LeaderService,
+  providers: [DishService , PromotionService, LeaderService,ProcessHTTPMsgService,
               {provide : 'BaseURL' , useValue : baseURL}
              ],//specify the services that this module will make use of
   bootstrap: [AppComponent]// AppComponent is the root component of our app

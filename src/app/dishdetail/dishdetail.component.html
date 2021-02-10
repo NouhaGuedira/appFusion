@@ -32,8 +32,12 @@
             </mat-card-actions>
           </mat-card>
           
-          <div [hidden]="dish"> <!-- if true hide this element-->
+          <div [hidden]="dish || errorMsg"> <!-- if true hide this element-->
             <mat-spinner></mat-spinner><h4>Loading... Please Wait</h4>
+          </div>
+          <div fxFlex *ngIf='errorMsg'>
+            <h2>Error</h2>
+            <h4>{{errorMsg}}</h4>
           </div>
     </div>
     
@@ -49,9 +53,13 @@
             <div mat-line>-- {{comment.author}} {{comment.date | date}}</div>
           </mat-list-item>
         </mat-list>
-      <div [hidden]="dish"> <!-- if true hide this element-->
-        <mat-spinner></mat-spinner><h4>Loading... Please Wait</h4>
-      </div>
+        <div [hidden]="dish || errorMsg"> <!-- if true hide this element-->
+          <mat-spinner></mat-spinner><h4>Loading... Please Wait</h4>
+        </div>
+        <div *ngIf='errorMsg'>
+          <h2>Error</h2>
+          <h4>{{errorMsg}}</h4>
+        </div>
       <!-- show of the new comment -->
       <mat-divider></mat-divider>
       <mat-list>

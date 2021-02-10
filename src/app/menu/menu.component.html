@@ -17,8 +17,12 @@
     </mat-grid-tile>
   </mat-grid-list>
 </div>
-<div [hidden]="dishes"> <!-- if true hide this element-->
+<div [hidden]="dishes || errorMsg "> <!-- if true hide this element-->
   <mat-spinner></mat-spinner><h4>Loading... Please Wait</h4>
+</div>
+<div fxFlex *ngIf = "errorMsg">
+  <h2>Error</h2>
+  <h4>{{errorMsg}}</h4>
 </div>
 <!-- (click)="onSelect(dish)"
   <app-dishdetail [dish]="selectedDish"></app-dishdetail> -->
