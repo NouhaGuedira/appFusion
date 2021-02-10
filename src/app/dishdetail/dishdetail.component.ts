@@ -8,15 +8,29 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
 import { baseURL } from '../shared/baseurl';
 import { error } from 'protractor';
+import { trigger , state, style, animate , transition } from '@angular/animations';
 
 // Js Object
-
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
+  animations :[//-------------Animation-----------------
+    trigger('visibility',[
+        state('shown', style({
+          transform : 'scale(1.0)', 
+          opacity: 1 //visible
+        })),
+        state('hidden', style({
+          transform : 'scale(0.5)',
+          opacity : 0 //hidden
+        })),
+        transition('* => *', animate('0.5s ease-in-out'))// from any state to any other state we move on ease 0.5s
+    ])
+  ]
 })
+
 export class DishdetailComponent implements OnInit {
 @ViewChild('fform') commentFormDirective : any; //to access the html elements of the form 
 
@@ -29,6 +43,7 @@ export class DishdetailComponent implements OnInit {
  theComment : Comment | undefined ;//used in onSubmit form
  errorMsg : string | undefined ; 
  dishcopy : Dish |undefined;
+ visibility = 'shown'; //init the param of animation 
 
   constructor(private dishService : DishService ,
               private location : Location ,
@@ -66,11 +81,12 @@ export class DishdetailComponent implements OnInit {
                                             );
     //pipe in the params observable values and use each one of them in our service methode then subsrcibe the output value
     this.route.params
-        .pipe(switchMap((params: Params)=> this.dishService.getDishById(params['id'])))
+        .pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishService.getDishById(params['id']); } ))
         .subscribe(currentdish =>{this.dish= currentdish;
                                   this.dishcopy = currentdish;
                                   this.currentId = currentdish.id;
-                                  this.setNextPrev(currentdish.id!); 
+                                  this.setNextPrev(currentdish.id!); //when the observerbal becomes available = show 
+                                  this.visibility = 'shown';
                                  },
                                   error => this.errorMsg = <any>error );
     
@@ -134,7 +150,7 @@ export class DishdetailComponent implements OnInit {
     this.theComment = this.commentForm.value;//map values submited to my object model
     
     this.dishcopy!.comments!.push(this.theComment!);
-    
+
     //push the comment in server data
     this.dishService.putDish(this.dishcopy!)
           .subscribe(updateddish =>{

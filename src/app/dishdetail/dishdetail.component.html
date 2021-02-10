@@ -11,7 +11,7 @@
     <!-- display the selected item -->
     <div fxFlex="30">
         
-        <mat-card class="dish-card" *ngIf="dish">
+        <mat-card class="dish-card" *ngIf="dish" [@visibility]="visibility">
             <mat-card-header>
               <div mat- card-avatar class="dish-header-image"></div>
               <mat-card-title >{{dish.name | uppercase}}</mat-card-title>
@@ -42,10 +42,10 @@
     </div>
     
       <!-- comments here -->
-    <div fxFlex="40">
+    <div fxFlex="40" *ngIf="dish" [@visibility]="visibility">
       <div fxLayout="column">
         <div fxFlex>
-        <mat-list *ngIf="dish">
+        <mat-list >
           <h2>Comments</h2>
           <mat-list-item *ngFor="let comment of dish.comments" >
             <div mat-line>{{comment.comment}}</div>
@@ -53,13 +53,7 @@
             <div mat-line>-- {{comment.author}} {{comment.date | date}}</div>
           </mat-list-item>
         </mat-list>
-        <div [hidden]="dish || errorMsg"> <!-- if true hide this element-->
-          <mat-spinner></mat-spinner><h4>Loading... Please Wait</h4>
-        </div>
-        <div *ngIf='errorMsg'>
-          <h2>Error</h2>
-          <h4>{{errorMsg}}</h4>
-        </div>
+        
       <!-- show of the new comment -->
       <mat-divider></mat-divider>
       <mat-list>
@@ -71,7 +65,7 @@
       </mat-list>
       </div>
 
-  <div fxFlex class="commentForm">
+  <div fxFlex class="commentForm" >
     <p>{{ commentForm.value | json }} {{ commentForm.status | json }}</p>
     <!-- reactive form for comments submition -->
     <form novalidate [formGroup]="commentForm" #fform="ngForm" (ngSubmit)="submitComment()">
@@ -95,7 +89,16 @@
       </mat-card-actions>
     </form>
   </div>
+  <div [hidden]="dish || errorMsg"> <!-- if true hide this element-->
+    <mat-spinner></mat-spinner><h4>Loading... Please Wait</h4>
+  </div>
+  <div *ngIf='errorMsg'>
+    <h2>Error</h2>
+    <h4>{{errorMsg}}</h4>
+  </div>
+  
 </div>
+
 </div>
   
     <!-- <mat-grid-tile *ngFor="let comment of selectedDish.comments"> -->
