@@ -8,26 +8,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
 import { baseURL } from '../shared/baseurl';
 import { error } from 'protractor';
-import { trigger , state, style, animate , transition } from '@angular/animations';
-
+import  { flyInOut, visibility,expand } from '../animations/app.animation';
 // Js Object
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss'],
+  host : {
+    '[@flyInOut]': 'true',
+    'style' : 'display : block;'
+  },
   animations :[//-------------Animation-----------------
-    trigger('visibility',[
-        state('shown', style({
-          transform : 'scale(1.0)', 
-          opacity: 1 //visible
-        })),
-        state('hidden', style({
-          transform : 'scale(0.5)',
-          opacity : 0 //hidden
-        })),
-        transition('* => *', animate('0.5s ease-in-out'))// from any state to any other state we move on ease 0.5s
-    ])
+    flyInOut(),
+    visibility(),
+    expand()
   ]
 })
 
@@ -81,12 +76,12 @@ export class DishdetailComponent implements OnInit {
                                             );
     //pipe in the params observable values and use each one of them in our service methode then subsrcibe the output value
     this.route.params
-        .pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishService.getDishById(params['id']); } ))
+        .pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishService.getDishById(params['id']); } ))//hide currentDish then show next one
         .subscribe(currentdish =>{this.dish= currentdish;
                                   this.dishcopy = currentdish;
-                                  this.currentId = currentdish.id;
-                                  this.setNextPrev(currentdish.id!); //when the observerbal becomes available = show 
-                                  this.visibility = 'shown';
+                                  this.currentId = currentdish.id; 
+                                  this.setNextPrev(currentdish.id!); 
+                                  this.visibility = 'shown'; //when the observerbal becomes available = show 
                                  },
                                   error => this.errorMsg = <any>error );
     
