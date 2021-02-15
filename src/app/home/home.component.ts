@@ -40,9 +40,9 @@ export class HomeComponent implements OnInit {
     //  this.promoService.getFeaturedPromotion().then((prom)=>this.promotion = prom);
     //  this.leaderService.getFeaturedLeader().then(( fLeader )=>  this.featuredLeader = fLeader);
 
-     this.dishService.getFeaturedDish().subscribe(dish =>this.dish = dish , catchError(error=> this.dish_msgError = error));
-     this.promoService.getFeaturedPromotion().subscribe(prom =>this.promotion = prom , catchError(error=> this.promo_msgError = error));
-     this.leaderService.getFeaturedLeader().subscribe( fLeader =>  this.featuredLeader = fLeader , catchError(error=> this.leader_msgError = error));
+     this.dishService.getFeaturedDish().subscribe(dish =>this.dish = dish , error=> this.dish_msgError = error );
+     this.promoService.getFeaturedPromotion().subscribe(prom =>this.promotion = prom , error=> this.promo_msgError = error);
+     this.leaderService.getFeaturedLeader().subscribe( fLeader =>  this.featuredLeader = fLeader , error=> this.leader_msgError = error);
   }
 
 }

@@ -13,7 +13,7 @@ export const routes : Routes =[
     {path: 'menu' , component: MenuComponent },
     {path: 'dishdetail/:id' , component: DishdetailComponent },
     {path: 'contact' , component: ContactComponent },
-    {path: 'leaders' , component: LeaderComponent },
+    {path: 'leadership' , component: LeaderComponent },
     {path: 'aboutus' , redirectTo: '/about' },
     {path: '' , redirectTo: '/home' ,pathMatch :'full' },
   //  {path :'**', component: PageNotFoundComponent},

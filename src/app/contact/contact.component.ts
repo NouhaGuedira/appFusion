@@ -1,12 +1,23 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder, FormGroup , Validators } from '@angular/forms';
+import { expand, flyInOut } from '../animations/app.animation';
 import { DishdetailComponent } from '../dishdetail/dishdetail.component';
+import { FeedbackService } from '../services/feedback.service';
+import { ProcessHTTPMsgService } from '../services/process-httpmsg.service';
 import {Feadback , ContactType} from '../shared/feadback';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
+  styleUrls: ['./contact.component.scss'],
+  host :{
+    '[@flyInOut]': 'true',
+    'style' : 'display : block;'
+  },
+  animations: [
+    flyInOut(),
+    expand()
+  ]
 })
 export class ContactComponent implements OnInit {
 @ViewChild('fform') feedbackFormDirective: any;//HTMLElement | undefined;
@@ -14,10 +25,15 @@ export class ContactComponent implements OnInit {
  // feedbackForm : FormGroup ;
   feedbackForm = new FormGroup ({});
   feedback : Feadback | undefined;
+  feedSubmition : Feadback | undefined;//val for returning the new feedback submited 
+  feedError : string |undefined;
   contactType = ContactType;
   testing :string | undefined;
+  startState = true;//form not submited yet
+  loading = false;//form submited waiting for return
+  showFormState = false ; //form submited with success
 
-  constructor(private fb : FormBuilder) { 
+  constructor(private fb : FormBuilder , private feedService : FeedbackService) { 
     //this.feedbackForm =  this.fb.group({});
     this.createForm();
     this.testing = "je teste ";
@@ -105,7 +121,33 @@ export class ContactComponent implements OnInit {
   }
   onSubmit(){
     this.feedback = this.feedbackForm.value;
-    console.log("on submit",this.feedback);
+    console.log("on submit feed",this.feedback);
+    this.loading = true;
+     // this.loadingState = true;
+    //post data to server after 5 min
+    this.feedService.submitFeedback(this.feedback!)
+                    .subscribe((feed) => {
+                        this.feedSubmition= feed;
+                        this.startState = false ;
+                        setTimeout(()=>{
+                          this.showFormState = false;
+                          this.startState = true;
+                        },5000);
+                      },
+                    (error)=>{console.error('error caught in feedback submition');
+                              this.feedError = error; 
+                              this.loading = false;
+                              },
+                     ()=>{this.loading = false; 
+                          this.showFormState = true;} 
+                    ); 
+    //first show form then after 5 sec hide it
+    // this.showFormState = true
+    // setTimeout(()=>{
+    //   this.showFormState = false;
+    //   this.startState = true;
+    // },5000);
+      
     //for reactive forms validation
     this.feedbackForm.reset({
       firstname: '',
@@ -116,8 +158,9 @@ export class ContactComponent implements OnInit {
       contacttype: 'None',
       message: ''
     });
-    console.log("after reset",this.feedbackForm);
+    console.log("after reset feed",this.feedbackForm);
     this.feedbackFormDirective.resetForm(); //reset all form values - validators also
-    console.log("after resetForm",this.feedbackFormDirective);
+    //console.log("after resetForm feed",this.feedbackFormDirective);
+    
   }
 }

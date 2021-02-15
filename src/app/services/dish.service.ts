@@ -4,7 +4,7 @@ import {Dish} from '../shared/dish';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseURL } from '../shared/baseurl';
 import { Observable , of, zip } from 'rxjs';
-import { delay, map , catchError } from 'rxjs/operators';
+import { delay, map , catchError, tap } from 'rxjs/operators';
 
 import {ProcessHTTPMsgService } from './process-httpmsg.service';
 
@@ -25,7 +25,8 @@ export class DishService {
 
   getDishById(id: string) : Observable<Dish>{
    
-    return this.http.get<Dish>(baseURL + 'dishes/' + id).pipe(catchError(this.processHTTPMsgService.handleError)) ;
+    return this.http.get<Dish>(baseURL + 'dishes/' + id).pipe(tap( obs =>console.log('Fetching dishe details')), 
+                              catchError(this.processHTTPMsgService.handleError) ) ; 
     //return of(DISHES.filter((dish) => (dish.id === id) )[0]).pipe(delay(2000));
     
     // return new Promise(resolve=> {

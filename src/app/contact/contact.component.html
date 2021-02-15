@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <div fxFlex>
+  <div @expand fxFlex>
     <h3>Location Information</h3> 
     <div fxLayout="column" fxLayout.gt-sm="row">
       <div fxFlex="50" fxFlexOffset="20px"> <!-- fxFlexOffset =some margin from the left-->
@@ -38,10 +38,11 @@
   </div>
   <div fxFlex fxFlexOffset="20px" class="form-size">
     <h3>Send us your Feedback</h3>
-    <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
+   
+    <!-- <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p> -->
     <!-- <h2 *ngIf="testing"> testing is equal to {{testing}}</h2> -->
 
-    <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
+    <form @expand [hidden]="showFormState||loading" novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
       <p>
         <mat-form-field class="half-width">
           <input matInput formControlName="firstname" placeholder="First Name" type="text" required>
@@ -86,8 +87,30 @@
       </p>
       <button type="submit" [disabled]="!feedbackForm.valid" mat-button class="background-primary text-floral-white">Submit</button>
     </form>
+    
+    <!-- spinner -->
+  <div  [hidden]="!loading"> 
+    <mat-spinner></mat-spinner><h4>Submitting form</h4>
   </div>
-	
+    <!-- when new feedback is submited -->
+    <div @expand *ngIf="feedSubmition" [hidden]="!showFormState" >
+      <h3 >Your Submission </h3>
+      <!-- <p>error ! {{feedError}}</p> -->
+      <h4>First Name : {{feedSubmition.firstname}} </h4>
+      <h4>Last Name : {{feedSubmition.lastname}}</h4>
+      <h4>Tel number : {{feedSubmition.telnum}}</h4>
+      <h4>Email : {{feedSubmition.email}}</h4>
+      <h4>Contact you : {{feedSubmition.agree}}</h4>
+      <h4>How? : {{feedSubmition.contacttype}}</h4>
+      <h4>Feedback : {{feedSubmition.message}} </h4>
+    </div>
+  </div>
+  <!-- display errors -->
+  <div @expand fxFlex *ngIf="feedError">
+    <h2>Oups</h2>
+    <h4>{{feedError}}</h4>
+    <p>Pleaze try again </p>
+</div>
 	
 	
 
