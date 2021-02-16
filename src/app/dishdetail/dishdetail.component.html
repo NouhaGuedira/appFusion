@@ -24,11 +24,11 @@
               </p>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-button [routerLink] = "['/dishdetail',prev]"><span class="fa fa-chevron-left fa-lg"></span><</button>
+              <button mat-button [routerLink] = "['/dishdetail',prev]"><span class="fa fa-chevron-left fa-lg"></span></button>
               <button mat-button (click)='goBack()'>BACK</button>
               <button mat-button >LIKE </button>
               <button mat-button>SHARE</button>
-              <button mat-button [routerLink] = "['/dishdetail',next]"><span class="fa fa-chevron-right fa-lg"></span>></button>
+              <button mat-button [routerLink] = "['/dishdetail',next]"><span class="fa fa-chevron-right fa-lg"></span></button>
             </mat-card-actions>
           </mat-card>
         </div>  
@@ -66,7 +66,7 @@
       </div>
 
    <div fxFlex fxFlexOffset="20px" [@visibility]="visibility" > 
-    <p>{{ commentForm.value | json }} {{ commentForm.status | json }}</p>
+    <!-- <p>{{ commentForm.value | json }} {{ commentForm.status | json }}</p> -->
     <!-- reactive form for comments submition -->
     <form novalidate [formGroup]="commentForm" #fform="ngForm" class="commentForm" (ngSubmit)="submitComment()">
       <p>

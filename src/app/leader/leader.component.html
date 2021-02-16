@@ -3,7 +3,7 @@
      <div *ngFor="let leader of leaders">
     
         <mat-card-header fxLayout="row" >
-            <div mat-card-avatar fxFlex="7"><img src="{{BaseURL + leader.image}}" alt="Avatar" class="avatar"/></div>
+            <div mat-card-avatar fxFlex="7"><img src='{{BaseURL + leader.image}}' alt="Avatar" class="avatar"/></div>
             <!-- <mat-card-title >
              
             </mat-card-title> -->
@@ -19,16 +19,12 @@
         <hr>
         <!-- <mat-divider></mat-divider> -->
     </div>
-    
-    <!-- <mat-list>
-        <h2>Comments</h2>
-        <mat-list-item *ngFor="let comment of dish.comments" >
-          <div mat-line>{{comment.comment}}</div>
-          <div mat-line>{{comment.rating}} Stars</div>
-          <div mat-line>-- {{comment.author}} {{comment.date | date}}</div>
-        </mat-list-item>
-      </mat-list> -->
+   
  </mat-card>
- <div [hidden] ="leaders">
+ <div [hidden] ="leaders || leaderError">
     <mat-spinner></mat-spinner><h4>Loading...Please Wait !</h4>
+</div>
+<div *ngIf ="leaderError">
+  <h2>Oups !</h2>
+  <h4>{{leaderError}}</h4>
 </div>

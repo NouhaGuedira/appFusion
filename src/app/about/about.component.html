@@ -55,7 +55,7 @@
 
 <h2>Corporate Leadership</h2>
   
-    <!-- <app-leader></app-leader> -->
+   <app-leader></app-leader>
     <!-- <mat-list>
         <mat-list-item *ngFor="let leader of leaders">
           <mat-icon mat-list-icon class="iconList"><img src={{leader.image}} alt="Avatar" class="avatar"/></mat-icon>
@@ -65,34 +65,5 @@
         </mat-list-item>
         <mat-divider></mat-divider>
     </mat-list> -->
-    <mat-card fxFlex fxLayoutGap="10" @expand *ngIf="leaders">
-      <!-- <div fxLayout="column" > -->
-       <div *ngFor="let leader of leaders">
-      
-          <mat-card-header fxLayout="row" >
-              <div mat-card-avatar fxFlex="7"><img src='{{BaseURL + leader.image}}' alt="Avatar" class="avatar"/></div>
-              <!-- <mat-card-title >
-               
-              </mat-card-title> -->
-          </mat-card-header>
-          <mat-card-content fxFlex>
-              <div mat-line><h3> {{leader.name}}</h3></div>
-              <div mat-line>{{leader.designation}}</div>
-              <div mat-line>{{leader.description | slice : 0  : 100 }} ...
-              <!-- <p ng-repeat="..."> -->
-                  <!-- {{leader.description | slice : 0  : 100 }} ... -->
-              </div>
-          </mat-card-content>
-          <hr>
-          <!-- <mat-divider></mat-divider> -->
-      </div>
-     
-   </mat-card>
-   <div [hidden] ="leaders || leaderError">
-      <mat-spinner></mat-spinner><h4>Loading...Please Wait !</h4>
-  </div>
-  <div *ngIf ="leaderError">
-    <h2>Oups !</h2>
-    <h4>{{leaderError}}</h4>
-  </div>
+    
 </div>

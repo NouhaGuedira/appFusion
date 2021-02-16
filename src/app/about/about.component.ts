@@ -18,15 +18,12 @@ import { expand, flyInOut } from '../animations/app.animation';
 })
 export class AboutComponent implements OnInit {
 
-  leaders : Leader[] | undefined;
-  leaderError : string | undefined;
 
   constructor (private LeaderService : LeaderService,
               @Inject('BaseURL') public BaseURL :any ) { }
 
   ngOnInit(): void {
-    this.LeaderService.getLeaders()
-    .subscribe(leaders => this.leaders = leaders,error => this.leaderError = error);//then((leaders) => this.leaders = leaders);
+  
   }
 
 }
